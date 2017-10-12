@@ -25,7 +25,7 @@ class BinaryTree():
 
         # Find position in tree
         parent = self._search(new_value)
-        new_value.parent = parent
+        new_node.parent = parent
 
         # Place to the left or right or at the same position depending on value
         if parent.value > new_value:
@@ -45,7 +45,7 @@ class BinaryTree():
 
         node_to_be_removed = self.search(value = value)
 
-        # If node present in tree
+        # If node is not present in tree
         if node_to_be_removed is None:
             return False
 
@@ -54,29 +54,48 @@ class BinaryTree():
             node_to_be_removed.duplicates -= 1
             return True
 
+        # if node to be removed is root
+        is_head = self.head.value == node_to_be_removed.value
+        has_left = self.head.left is not None
+        has_right = self.head.right is not None
+
+        if is_head:
+            if not has_left and not has_right:
+                self.head.value = None
+            elif not has_left and has_right:
+                self.head = self.head.right
+            elif has_left and not has_right:
+                self.head = self.head.left
+            else:
+                right_binary_tree = BinaryTree(head = self.head.right)
+                right_binary_tree.insert(new_node = self.head.left)
+                self.head = self.head.right
+
+            return True
+
         # else, check which side of parent is to be removed, and remove it
         parent = node_to_be_removed.parent
 
-        removeLeft = parent.value > node_to_be_removed.value
+        remove_left = parent.value > node_to_be_removed.value
         had_left_child = node_to_be_removed.left is not None
         had_right_child = node_to_be_removed.right is not None
 
-        if removeLeft and not had_left_child and not had_right_child:
+        if remove_left and not had_left_child and not had_right_child:
             parent.left = None
-        elif removeLeft and had_left_child and not had_right_child:
+        elif remove_left and had_left_child and not had_right_child:
             parent.left = node_to_be_removed.left
-        elif removeLeft and not had_left_child and had_right_child:
+        elif remove_left and not had_left_child and had_right_child:
             parent.left = node_to_be_removed.right
-        elif removeLeft and had_left_child and had_right_child:
+        elif remove_left and had_left_child and had_right_child:
             parent.left = node_to_be_removed.right
             right_binary_tree = BinaryTree(head = node_to_be_removed.right)
             right_binary_tree.insert(node_to_be_removed.left)
 
-        elif not removeLeft and not had_left_child and not had_right_child:
+        elif not remove_left and not had_left_child and not had_right_child:
             parent.right = None
-        elif not removeLeft and had_left_child and not had_right_child:
+        elif not remove_left and had_left_child and not had_right_child:
             parent.right = node_to_be_removed.left
-        elif not removeLeft and not had_left_child and had_right_child:
+        elif not remove_left and not had_left_child and had_right_child:
             parent.right = node_to_be_removed.right
         else:
             parent.right = node_to_be_removed.left
