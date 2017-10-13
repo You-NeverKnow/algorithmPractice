@@ -3,11 +3,13 @@ class HashTable:
     """
     Implements a hash table data structure
     """
+
     # -------------------------------------------------------------------------|
     def __init__(self, bucket_count):
         """
         Constructor for HashTable
         """
+        self._count = 0
         self.bucket_count = bucket_count
         self.table = [[] for x in range(self.bucket_count)]
     # -------------------------------------------------------------------------|
@@ -24,6 +26,15 @@ class HashTable:
             number += letterIndex + (letterIndex * ord(letter))
 
         return number % self.bucket_count
+
+    # -------------------------------------------------------------------------|
+    # -------------------------------------------------------------------------|
+
+    def __len__(self):
+        """
+         Returns number of elements stored in the table
+        """
+        return self._count
 
     # -------------------------------------------------------------------------|
     # -------------------------------------------------------------------------|
@@ -49,6 +60,7 @@ class HashTable:
         # This implementation does not allow duplicates
         if item not in self.table[hash_number]:
             self.table[hash_number].append(item)
+            self._count += 1
             return True
 
         return False
@@ -64,6 +76,7 @@ class HashTable:
         # This implementation does not allow duplicates
         try:
             self.table[hash_number].remove(item)
+            self._count -= 1
             return True
         except ValueError:
             return False

@@ -4,7 +4,9 @@ hash_table = HashTable(bucket_count = 50)
 
 x = hash_table.insert(50)
 y = hash_table.insert(50)
+
 hash_table.insert(20)
+print("Number of items in table = ", len(hash_table))
 
 a = hash_table.search(50)
 b = hash_table.search(21)
@@ -14,3 +16,4 @@ e = hash_table.search(20)
 
 
 print(a, b, d, c, e, x, y)
+print("Number of items in table = ", len(hash_table))

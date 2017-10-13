@@ -3,16 +3,23 @@ class BinaryTree:
     """
     Implements a Binary tree.
     """
-
     # -------------------------------------------------------------------------|
     def __init__(self, head):
         """
         Constructor for BinaryTree
         """
         self.head = head
+        self._count = 1
 
     # -------------------------------------------------------------------------|
+    # -------------------------------------------------------------------------|
 
+    def __len__(self):
+        """
+         Returns the number of nodes in this binary tree
+        """
+        return self._count
+    # -------------------------------------------------------------------------|
     # -------------------------------------------------------------------------|
 
     def insert(self, new_node):
@@ -33,6 +40,8 @@ class BinaryTree:
         else:
             parent.duplicates += 1
 
+        # Increment count of nodes in the tree
+        self._count += 1
     # -------------------------------------------------------------------------|
     # -------------------------------------------------------------------------|
 
@@ -47,9 +56,13 @@ class BinaryTree:
         if node_to_be_removed is None:
             return False
 
+        # Decrement count of nodes in the tree
+        self._count -= 1
+
         # If node position has multiple values, simply decrement count
         if node_to_be_removed.duplicates > 0:
             node_to_be_removed.duplicates -= 1
+
             return True
 
         # if node to be removed is root
@@ -58,6 +71,7 @@ class BinaryTree:
         has_right = self.head.right is not None
 
         if is_head:
+
             if not has_left and not has_right:
                 self.head.value = None
             elif not has_left and has_right:
@@ -110,10 +124,10 @@ class BinaryTree:
         Searches for a value, and returns True/False depending on whether it is
         present or not.
         """
-        lastNode = self._search(value = value)
+        last_node = self._search(value = value)
 
-        if lastNode.value == value:
-            return lastNode
+        if last_node.value == value:
+            return last_node
         else:
             return None
     # -------------------------------------------------------------------------|
