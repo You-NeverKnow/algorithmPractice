@@ -3,6 +3,7 @@ import random
 from binaryTree import BinaryTree
 from node import Node
 
+
 # -----------------------------------------------------------------------------|
 def check_sort(some_list, sorted_list):
     """
@@ -19,8 +20,6 @@ def check_sort(some_list, sorted_list):
 
     return True
 # -----------------------------------------------------------------------------|
-
-
 
 head_value = 15
 head_node = Node(value = head_value)

@@ -8,6 +8,9 @@ class Heap:
     def __init__(self, form):
         """
         Constructor for Heap
+
+        :param  form Takes either "min" or "max" values to evaluate dominant
+                        node
         """
         assert form == "min" or form == "max"
 
@@ -35,7 +38,8 @@ class Heap:
         head = self.array[0]
 
         # Replace head with a new element from the heap
-        self.array[0] = self.array.pop()
+        if len(self.array) > 1:
+            self.array[0] = self.array.pop()
         self._bubble_down(parent_index = 0)
 
         return head
@@ -77,7 +81,11 @@ class Heap:
         if son_index >= len(self.array):
             return
 
-        family_indices = parent_index, son_index, daughter_index
+        if daughter_index >= len(self.array):
+            family_indices = parent_index, son_index
+        else:
+            family_indices = parent_index, son_index, daughter_index
+
         dominant_index = self._get_dominant(family_indices)
 
         if dominant_index == parent_index:
@@ -167,7 +175,7 @@ class Heap:
         else:
             parent_index = (child_index - 1) / 2
 
-        return parent_index - 1
+        return int(parent_index - 1)
 
     # -------------------------------------------------------------------------|
     # -------------------------------------------------------------------------|
