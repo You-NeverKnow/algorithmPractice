@@ -7,8 +7,6 @@ class Sort:
     Implements various sorting algorithms
     """
     # -------------------------------------------------------------------------|
-    def __int__(self):
-        self.array = []
 
     def bubble_sort(self, some_list):
         """
